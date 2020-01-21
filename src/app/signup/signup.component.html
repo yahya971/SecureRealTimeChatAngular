@@ -3,14 +3,31 @@
     <img src="assets/chat-illustration-2.svg" />
     <div class="login-content">
       <h1>Create an Account</h1>
-      <form ngSubmit="login()">
+      <form [formGroup]="myForm" >
         <mat-form-field>
-          <input matInput placeholder="Email" type="email" />
-          <mat-error *ngIf="false">
-            Please enter a valid email address
-          </mat-error>
+          <input matInput placeholder="User Name" type="text" formControlName="cn" required />
+
         </mat-form-field>
-        <button mat-raised-button color="primary">SIGN UP</button>
+        <mat-form-field>
+          <input matInput placeholder="First Name" type="text" formControlName="givenName" required />
+
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Last Name" type="text" formControlName="sn" required />
+
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Telephone" type="text" formControlName="telephoneNumber" required/>
+
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Password" type="password" formControlName="userPassword" required/>
+
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="submit()" [disabled]="myForm.invalid">SIGN UP</button>
       </form>
       <div>
         <span>Do you have an account?</span>
