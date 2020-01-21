@@ -1,0 +1,51 @@
+@import '../../styles/variables.scss';
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  padding-left: 10px;
+  margin: 0;
+}
+
+img {
+  margin: 20px;
+}
+
+button {
+  margin-top: 20px;
+}
+
+span,
+a {
+  font-family: Roboto-Regular;
+  font-size: 16px;
+  color: $font-color;
+  letter-spacing: 0;
+  margin-left: 5px;
+}
+
+a {
+  color: #1B47DB;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex: 1;
+}
+
+@media (max-width: 710px) {
+  img {
+    display: none;
+  }
+
+  h1 {
+    padding: 0;
+  }
+}

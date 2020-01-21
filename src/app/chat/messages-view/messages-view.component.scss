@@ -1,0 +1,231 @@
+:host {
+  width: 100%;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100%;
+}
+
+.user-info {
+  font-family: Helvetica;
+  font-size: 15px;
+  color: #2d313f;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  flex: 0 0 62px;
+  padding-left: 20px;
+  border-bottom: 1px solid #BDCCD7;
+}
+
+.no-messages {
+  background: #f8f9fb;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  justify-content: center;
+  padding: 10px;
+}
+
+.no-messages img {
+  max-width: 100%;
+}
+
+.title {
+  font-family: 'Abril Fatface', cursive;
+  font-size: 26px;
+  color: #1b47db;
+  letter-spacing: 0;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.info {
+  opacity: 0.8;
+  font-family: Helvetica;
+  font-size: 16px;
+  color: #2d313f;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 22px;
+  margin-top: 5px;
+}
+
+.input-container {
+  display: flex;
+
+  input {
+    height: 62px;
+    flex: 1;
+    font-size: 21px;
+    width: 100%;
+    border: none;
+    border-top: 1px solid #D8E1E7;
+    outline: none;
+    resize: none;
+    border-radius: 0 0 6px 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    color: #333;
+    padding-left: 20px;
+
+    &::placeholder {
+      color: #BBBEBE;
+    }
+  }
+}
+
+ul {
+  padding: 0 1em;
+  margin: 0;
+}
+
+.messages-container {
+  overflow: auto;
+  flex-grow: 2;
+  background-color: #f8f9fb;
+}
+
+li {
+  display: flex;
+  list-style-type: none;
+  align-items: flex-end;
+  padding: 10px 0;
+  background-color: #f8f9fb;
+}
+
+.speech-bubble {
+  position: relative;
+  background: #FFF;
+  border-radius: 4px;
+  box-shadow: 0px 1px 2px #BDCCD7;
+  padding: 10px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 21px;
+  color: #2D313F;
+  mix-blend-mode: normal;
+  opacity: 0.8;
+  max-width: 280px;
+  min-width: 100px;
+  margin-left: 10px;
+}
+
+.speech-bubble:after {
+  content: '';
+  position: absolute;
+  top: calc(100% - 20px);
+  width: 0;
+  height: 0;
+  border: 12px solid transparent;
+  margin-top: -12px;
+  z-index: 1;
+  transform: skew(0, 30deg);
+  left: 0;
+  border-right-color: #ffffff;
+  border-left: 0;
+  margin-left: -10px;
+}
+
+.speech-bubble:before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: calc(100% - 20px);
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  filter: blur(1px);
+  margin-top: -10px;
+  transform: skew(0, 30deg);
+  left: 0;
+  border-right-color: #ffffff;
+  border-left: 0;
+  margin-left: -10px;
+  border-right-color: rgba(0, 0, 0, 0.2);
+}
+
+.speech-bubble-own {
+  position: relative;
+  background: #1B47DB;
+  color: #FFF;
+  border-radius: 4px;
+  box-shadow: 0px 1px 2px #BDCCD7;
+  padding: 10px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 21px;
+  mix-blend-mode: normal;
+  max-width: 280px;
+  min-width: 100px;
+  margin-right: 10px;
+}
+
+.speech-bubble-own:after {
+  content: '';
+  position: absolute;
+  top: calc(100% - 20px);
+  width: 0;
+  height: 0;
+  border: 12px solid transparent;
+  margin-top: -12px;
+  z-index: 1;
+  transform: skew(0, 30deg);
+  right: 0;
+  border-left-color: #1B47DB;
+  border-right: 0;
+  margin-right: -11px;
+}
+
+.speech-bubble-own:before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: calc(100% - 20px);
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  filter: blur(1px);
+  margin-top: -10px;
+  transform: skew(0, 30deg);
+  right: 0;
+  border-left-color: #1B47DB;
+  border-right: 0;
+  margin-right: -11px;
+  border-right-color: rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 635px) {
+  li img {
+    display: none;
+  }
+  .speech-bubble:before,
+  .speech-bubble:after,
+  .speech-bubble-own:before,
+  .speech-bubble-own:after {
+    display: none;
+  }
+  li {
+    width: 100%;
+  }
+  .speech-bubble,
+  .speech-bubble-own {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  .title {
+    font-size: 20px;
+  }
+  .info {
+    font-size: 15px;
+  }
+}
+
