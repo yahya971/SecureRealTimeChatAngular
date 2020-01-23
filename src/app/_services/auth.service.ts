@@ -28,10 +28,8 @@ export class AuthService {
     //);
   }
 
-  login(userId: string) {
-    //return CometChat.login(userId);
-    // .then(usr => (this.currentUser = usr), (this.currentUser = null))
-    // .then(_ => console.log('User logged in'), console.error);
+  login(data) {
+    return this.httpClient.post('http://127.0.0.1:5000/login', data);
   }
 
   signup(data) {
