@@ -86,7 +86,8 @@
 
     <div class="div">
       <div class="btn-group">
-        <button (click)="onGenerateCSR()" [disabled]="!cryptoService.PRIVATE_KEY_PEM" class="btn btn-danger"> Generate
+        <button (click)="onGenerateCSR()" [disabled]="!cryptoService.PRIVATE_KEY_PEM || myForm.invalid"
+                class="btn btn-danger"> Generate
           CSR
         </button>
 

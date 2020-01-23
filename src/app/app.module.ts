@@ -14,6 +14,7 @@ import { ContactsListComponent } from './chat/contacts-list/contacts-list.compon
 import { MessagesViewComponent } from './chat/messages-view/messages-view.component';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { ClipboardModule } from 'ngx-clipboard';
+import { HttpClientModule } from '@angular/common/http';
 
 
 const config: SocketIoConfig = { url: 'http://127.0.0.1:5000/test', options: {} };
@@ -35,9 +36,11 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:5000/test', options: {} 
     ReactiveFormsModule,
     MaterialModule,
     SocketIoModule.forRoot(config),
-    ClipboardModule
+    ClipboardModule,
+    HttpClientModule
 
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

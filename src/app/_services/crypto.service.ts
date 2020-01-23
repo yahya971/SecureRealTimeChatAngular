@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as forge from 'node-forge';
 import { pki } from 'node-forge';
-import CertificateRequest = module;
-import KeyPair = module;
 
 @Injectable({
   providedIn: 'root'
@@ -23,15 +21,26 @@ export class CryptoService {
     return this._PRIVATE_KEY_PEM;
   }
 
-  private _KEYPAIR: KeyPair;
+  private _KEYPAIR;
 
-  get KEYPAIR(): KeyPair {
+  get KEYPAIR() {
     return this._KEYPAIR;
   }
 
-  private _CSR: CertificateRequest;
+  private _ATTRIBUTES;
 
-  get CSR(): CertificateRequest {
+
+  get ATTRIBUTES() {
+    return this._ATTRIBUTES;
+  }
+
+  set ATTRIBUTES(value) {
+    this._ATTRIBUTES = value;
+  }
+
+  private _CSR;
+
+  get CSR() {
     return this._CSR;
   }
 
@@ -45,7 +54,7 @@ export class CryptoService {
     console.log('starting generating key pair ');
     this.resetCSR();
 
-    new Promise<KeyPair>((f, r) => forge.pki.rsa.generateKeyPair
+    new Promise<any>((f, r) => forge.pki.rsa.generateKeyPair
     (
       {
         bits: 2048,
@@ -69,43 +78,34 @@ export class CryptoService {
   }
 
   generateCSR() {
+    console.log(this._ATTRIBUTES);
+    if (!this._ATTRIBUTES) {
+      return;
+    }
     const csr = pki.createCertificationRequest();
 
 
     csr.publicKey = this._KEYPAIR.publicKey;
+
+    csr.setSubject(this.ATTRIBUTES);
     csr.sign(this._KEYPAIR.privateKey);
+
+    // verify certification request
+    // @ts-ignore
+    var verified = csr.verify();
+    console.log('verify');
+    console.log(verified);
+    console.log('subject in csr');
+    console.log(csr.subject);
+
 
     const pemCsr = pki.certificationRequestToPem(csr);
 
-    const attrs = [{
-      name: 'commonName',
-      value: 'example.org'
-    }, {
-      name: 'countryName',
-      value: 'US'
-    }, {
-      shortName: 'ST',
-      value: 'Virginia'
-    }, {
-      name: 'localityName',
-      value: 'Blacksburg'
-    }, {
-      name: 'organizationName',
-      value: 'Test'
-    }, {
-      shortName: 'OU',
-      value: 'Test'
-    }];
-
-
-    csr.setSubject(attrs);
 
     this._CSR = csr;
     this._CSR_PEM = pemCsr;
 
-    console.log('[CERTIFICATION REQUEST]');
-    console.log(this.CSR_PEM);
-    console.log(this.CSR);
+
   }
 
   resetCSR() {

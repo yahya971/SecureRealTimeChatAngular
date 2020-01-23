@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CryptoService } from '../_services/crypto.service';
 import { IClipboardResponse } from 'ngx-clipboard';
 import * as FileSaver from 'file-saver';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +16,7 @@ export class SignupComponent implements OnInit {
 
   myForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private cryptoService: CryptoService) {
+  constructor(private fb: FormBuilder, private router: Router, private cryptoService: CryptoService, private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -24,15 +25,22 @@ export class SignupComponent implements OnInit {
       givenName: [''],
       sn: [''],
       telephoneNumber: [''],
-      userPassword: ['']
+      userPassword: [''],
+      userCertificateRequest: ['']
     });
 
 
   }
 
   submit() {
-    console.log(this.myForm.value);
-    this.router.navigate(['/login']);
+
+
+    console.log(this.cryptoService.ATTRIBUTES);
+    this.authService.signup(this.myForm.value).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
   }
 
   onGenerateKeyPairClick() {
@@ -45,7 +53,24 @@ export class SignupComponent implements OnInit {
   }
 
   onGenerateCSR() {
+    this.cryptoService.ATTRIBUTES = [{
+      name: 'commonName',
+      value: this.myForm.value.cn
+    }, {
+      name: 'countryName',
+      value: 'TN'
+    }, {
+      shortName: 'ST',
+      value: 'TUNISIA'
+    }, {
+      name: 'localityName',
+      value: 'TUNIS'
+    }, {
+      name: 'organizationName',
+      value: 'GL'
+    }];
     this.cryptoService.generateCSR();
+    this.myForm.patchValue({ userCertificateRequest: this.cryptoService.CSR_PEM });
   }
 
   onSave(text, filename) {
