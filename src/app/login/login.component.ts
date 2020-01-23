@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../core/auth.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -11,14 +12,10 @@ import { AuthService } from '../core/auth.service';
 export class LoginComponent {
   error: string;
 
-  constructor(readonly router: Router, readonly auth: AuthService) {}
+  constructor(readonly router: Router) {}
 
-  login(userId: string) {
-    this.auth
-      .login(userId)
-      .then(
-        () => this.router.navigateByUrl('/chat'),
-        err => (this.error = err)
-      );
+  login(formulaire: NgForm) {
+    console.log(formulaire.value);
+    this.router.navigateByUrl('/chat');
   }
 }

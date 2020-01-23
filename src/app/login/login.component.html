@@ -2,14 +2,14 @@
   <div class="login-box">
     <div class="login-content">
       <h1>Welcome Back</h1>
-      <form (ngSubmit)="login(userId.value)">
+      <form (ngSubmit)="login(formulaire)" #formulaire= "ngForm">
         <mat-form-field>
-          <input matInput placeholder="User ID" type="email" #userId />
-          <mat-error *ngIf="error">
-            {{ error }}
-          </mat-error>
+          <input matInput placeholder="User ID" type="string" required ngModel name="cn"/>
         </mat-form-field>
-        <button mat-raised-button color="primary">LOG IN</button>
+        <mat-form-field>
+        <input matInput placeholder="Password" type="password" required ngModel name="password" />
+        </mat-form-field>
+        <button mat-raised-button color="primary" [disabled]="formulaire.invalid">LOG IN</button>
       </form>
       <div>
         <span>Don't have an account?</span>
