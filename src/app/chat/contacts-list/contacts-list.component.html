@@ -3,21 +3,20 @@
   <ul>
     <li
       (click)="onUserSelected(user)"
-      *ngFor="let user of users"
+      *ngFor="let user of getUsersWithoutCurrentUser(users)"
       [ngClass]="{ active: user.id === activeUser?.id }"
     >
+     
+        <div class="image-container">
+          <img [src]="'../../assets/avatar.png'" height="37px" width="36px" />
+          <span class="circle"
+                [ngClass]="user.status === 'online' ? 'on' : 'off'"></span>
+        </div>
+        <div class="contacts-info">
+          <span class="status-title">{{user.id}}</span>
+          <span class="status-text">status</span>
+        </div>
 
-      <div class="image-container">
-        <img [src]="'../../assets/avatar.png'" height="37px" width="36px"/>
-        <span
-          class="circle"
-          [ngClass]="user.status === 'online' ? 'on' : 'off'"
-        ></span>
-      </div>
-      <div class="contacts-info">
-        <span class="status-title">{{user.id}}</span>
-        <span class="status-text">status</span>
-      </div>
     </li>
   </ul>
 </div>

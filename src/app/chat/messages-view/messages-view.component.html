@@ -9,12 +9,12 @@
 <div class="main">
   <div class="user-info">{{ selectedUserName }}</div>
   <div
-    *ngIf="messages && messages[0]; else noMessages"
+    *ngIf="checkforMessages(); else noMessages"
     class="messages-container"
     #scrollMe
   >
     <ul>
-      <li *ngFor="let message of messages"
+      <li *ngFor="let message of filterMessages()"
           [style.flex-direction]="
           message.senderId === authService.currentUser.id
             ? 'row-reverse'
@@ -30,7 +30,7 @@
     </ul>
   </div>
   <div class="input-container">
-    <input
+    <input *ngIf="selectedUser"
       placeholder="Type something"
       #messageInput
       (keydown.enter)="

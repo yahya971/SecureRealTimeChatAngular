@@ -5,6 +5,7 @@ import { CometChat } from '@cometchat-pro/chat';
 import { ChatService } from '../_services/chat.service';
 import { User } from '../_models/User';
 import { Message } from '../_models/Message';
+import { Observable, of } from 'rxjs';
 const listenerId = 'ChatScreenListener';
 
 @Component({
@@ -14,24 +15,37 @@ const listenerId = 'ChatScreenListener';
 })
 export class ChatComponent implements OnInit, OnDestroy {
   selectedUser: User;
-  messages: any[] = [];
-  users: User[];
+  messages: Message[] = [];
+
+  users: User[]=[];
 
   constructor(
     readonly authService: AuthService,
     readonly chatService: ChatService
-  ) {}
+  ) {
 
-  ngOnInit() {
-    this.chatService.getMessage().subscribe( msg => {
-      console.log('New message: ', msg);
-      this.messages.concat(msg);
-    });
     this.chatService.getConnectEvent().subscribe(
       (data: User[]) => {
         this.users = data;
         console.log('CONNECTED EVENT');
+        console.log(this.users);
+
       });
+  }
+
+  ngOnInit() {
+    this.chatService.broadcast_connect();
+    this.chatService.getMessage().subscribe((value) => {
+      console.log(value);
+      this.messages.push(value);
+    })
+
+    //this.chatService.getMessage().subscribe( (msg:Message) => {
+    //  console.log('New message: ', msg);
+    //  this.messages.push(msg);
+    //});
+
+
   }
 
   ngOnDestroy() {
@@ -59,4 +73,21 @@ export class ChatComponent implements OnInit, OnDestroy {
   //     this.messages = [...this.messages, sentMessage as any];
   //   }
   // }
+
+
+  //Output Handeling of Contacts List
+  selectUser(user) {
+    this.selectedUser = user;
+    console.log(user);
+  }
+
+
+
+  //Output Handeling of MessageView
+  recieveMessage(message) {
+    console.log(message);
+    this.chatService.sendMessage(message);
+  }
+
+
 }

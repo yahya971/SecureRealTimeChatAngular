@@ -4,6 +4,8 @@ import { ContactsService } from './contacts.service';
 import { ChatService } from '../../_services/chat.service';
 import { User } from '../../_models/User';
 import { Message } from '../../_models/Message';
+import { AuthService } from '../../_services/auth.service';
+import { Observable } from 'rxjs';
 const listenerId = 'ContactsListListner';
 
 @Component({
@@ -13,18 +15,20 @@ const listenerId = 'ContactsListListner';
 })
 export class ContactsListComponent implements OnInit, OnDestroy {
   @Output() userSelected = new EventEmitter<User>();
-
+  @Input() users: User[];
+  currentUser: User;
   activeUser: User;
-  @Input()  users: User[] = [];
 
-  constructor(readonly contactsService: ContactsService, private chatService: ChatService) {
+
+
+  constructor(readonly contactsService: ContactsService, private chatService: ChatService, private authService: AuthService) {
   }
 
   ngOnInit() {
-  
 
-    this.chatService.getMessage().subscribe(value => console.log(value));
-    this.chatService.broadcast_connect();
+    this.currentUser = this.authService.currentUser;
+
+  
     // var message = new Message(1, "Hello World", 2, 3);
 
     //this.chatService.sendMessage(message);
@@ -34,6 +38,17 @@ export class ContactsListComponent implements OnInit, OnDestroy {
   }
 
 
+
+
+  //this function returns the users list without the authenticated user (current User)
+  getUsersWithoutCurrentUser() {
+    let filteredUsers: User[] = [];
+    this.users.map(value => {
+      if (value.id != this.currentUser.id)
+        filteredUsers.push(value);
+    })
+    return filteredUsers
+  }
 
   ngOnDestroy(): void {
     this.contactsService.destroy(listenerId);
