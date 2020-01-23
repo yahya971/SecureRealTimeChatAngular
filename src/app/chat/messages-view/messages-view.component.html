@@ -14,23 +14,18 @@
     #scrollMe
   >
     <ul>
-      <li
-        *ngFor="let message of messages"
-        [style.flex-direction]="
-          message.sender.uid === authService.currentUser.uid
+      <li *ngFor="let message of messages"
+          [style.flex-direction]="
+          message.senderId === authService.currentUser.id
             ? 'row-reverse'
             : 'row'
-        "
-      >
-        <img [src]="message.sender.avatar" width="36px" height="37px" />
-        <span
-          [ngClass]="
-            message.sender.uid === authService.currentUser.uid
+        ">
+        <!--<img [src]="message.sender.avatar" width="36px" height="37px" />-->
+        <span [ngClass]="
+            message.senderId === authService.currentUser.id
               ? 'speech-bubble-own'
               : 'speech-bubble'
-          "
-          >{{ message.text }}</span
-        >
+          ">{{ message.content }}</span>
       </li>
     </ul>
   </div>

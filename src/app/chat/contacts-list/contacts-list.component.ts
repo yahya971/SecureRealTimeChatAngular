@@ -1,9 +1,9 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, Input } from '@angular/core';
 
 import { ContactsService } from './contacts.service';
 import { ChatService } from '../../_services/chat.service';
 import { User } from '../../_models/User';
-
+import { Message } from '../../_models/Message';
 const listenerId = 'ContactsListListner';
 
 @Component({
@@ -15,32 +15,25 @@ export class ContactsListComponent implements OnInit, OnDestroy {
   @Output() userSelected = new EventEmitter<User>();
 
   activeUser: User;
-  users: User[] = [];
+  @Input()  users: User[] = [];
 
   constructor(readonly contactsService: ContactsService, private chatService: ChatService) {
   }
 
   ngOnInit() {
+  
 
-    this.chatService.getConnectEvent().subscribe(
-      (data: User[]) => {
-        this.users = data;
-        console.log('CONNECTED EVENT');
-      });
+    this.chatService.getMessage().subscribe(value => console.log(value));
     this.chatService.broadcast_connect();
+    // var message = new Message(1, "Hello World", 2, 3);
 
+    //this.chatService.sendMessage(message);
+    
 
-    this.selectFirstContact();
+    //this.selectFirstContact();
   }
 
-  private selectFirstContact() {
-    if (
-      this.contactsService.contacts &&
-      this.contactsService.contacts.length !== 0
-    ) {
-      this.onUserSelected(this.contactsService.contacts[0] as any);
-    }
-  }
+
 
   ngOnDestroy(): void {
     this.contactsService.destroy(listenerId);

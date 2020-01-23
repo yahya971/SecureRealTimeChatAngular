@@ -1,7 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { CometChat } from '@cometchat-pro/chat';
-import { timer } from 'rxjs';
+
+import { timer, from } from 'rxjs';
 import { AuthService } from '../../_services/auth.service';
+import { Message } from '../../_models/Message';
 
 @Component({
   selector: 'app-messages-view',
@@ -9,18 +10,23 @@ import { AuthService } from '../../_services/auth.service';
   styleUrls: ['./messages-view.component.scss']
 })
 export class MessagesViewComponent implements OnChanges {
-  @Input() messages: CometChat.TextMessage[] | null;
+ // @Input() messages: Message[];
   @Input() selectedUserName: string;
-
+  messages: Message[]=[];
   @Output() sendMessage = new EventEmitter<string>();
 
   @ViewChild('scrollMe', { static: false })
   messagesContainer: ElementRef<HTMLDivElement>;
 
-  constructor(readonly authService: AuthService) {}
+  constructor(readonly authService: AuthService) {
+    this.messages.push(new Message(1, "Hello", 926062, 926062));
+    this.messages.push(new Message(1, "World", 926062, 926062));
+    console.log(this.messages);
+  }
 
   onSendMessage(message: string) {
     this.sendMessage.emit(message);
+    
   }
 
   ngOnChanges(changes: SimpleChanges): void {

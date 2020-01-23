@@ -4,7 +4,7 @@ import { AuthService } from '../_services/auth.service';
 import { CometChat } from '@cometchat-pro/chat';
 import { ChatService } from '../_services/chat.service';
 import { User } from '../_models/User';
-
+import { Message } from '../_models/Message';
 const listenerId = 'ChatScreenListener';
 
 @Component({
@@ -14,7 +14,8 @@ const listenerId = 'ChatScreenListener';
 })
 export class ChatComponent implements OnInit, OnDestroy {
   selectedUser: User;
-  messages: CometChat.TextMessage[] | null = null;
+  messages: any[] = [];
+  users: User[];
 
   constructor(
     readonly authService: AuthService,
@@ -22,14 +23,19 @@ export class ChatComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.chatService.listenForMessages(listenerId, msg => {
+    this.chatService.getMessage().subscribe( msg => {
       console.log('New message: ', msg);
-      this.messages = [...this.messages, msg];
+      this.messages.concat(msg);
     });
+    this.chatService.getConnectEvent().subscribe(
+      (data: User[]) => {
+        this.users = data;
+        console.log('CONNECTED EVENT');
+      });
   }
 
   ngOnDestroy() {
-    this.chatService.removeMessageListener(listenerId);
+    //this.chatService.removeMessageListener(listenerId);
   }
 
   // async onUserSelected(usr: CometChat.UserObj) {

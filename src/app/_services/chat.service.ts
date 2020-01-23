@@ -3,7 +3,9 @@ import { Socket } from 'ngx-socket-io';
 
 import { CometChat } from '@cometchat-pro/chat';
 import { AuthService } from './auth.service';
-import Message = CometChat.Message;
+import { Message } from '../_models/Message';
+import { User } from '../_models/User';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,30 +25,31 @@ export class ChatService {
   //   return CometChat.sendMessage(message);
   // }
 
-  listenForMessages(listenerId: string, onMessageReceived: (msg: any) => void) {
-    CometChat.addMessageListener(
-      listenerId,
-      new CometChat.MessageListener({
-        onTextMessageReceived: onMessageReceived,
-        onMediaMessageReceived: _ => undefined
-      })
-    );
-  }
+  //listenForMessages(listenerId: string, onMessageReceived: (msg: any) => void) {
+  //  CometChat.addMessageListener(
+  //    listenerId,
+  //    new CometChat.MessageListener({
+  //      onTextMessageReceived: onMessageReceived,
+  //      onMediaMessageReceived: _ => undefined
+  //    })
+  //  );
+  //}
 
-  removeMessageListener(listenerId: string) {
-    CometChat.removeMessageListener(listenerId);
-  }
+  //removeMessageListener(listenerId: string) {
+  //  CometChat.removeMessageListener(listenerId);
+  //}
 
-  getPreviousMessages(userId: string) {
-    const messageRequest = new CometChat.MessagesRequestBuilder()
-      .setUID(userId)
-      .setLimit(100)
-      .build();
+  //getPreviousMessages(userId: string) {
+  //  const messageRequest = new CometChat.MessagesRequestBuilder()
+  //    .setUID(userId)
+  //    .setLimit(100)
+  //    .build();
 
-    return messageRequest.fetchPrevious();
-  }
+  //  return messageRequest.fetchPrevious();
+  //}
 
   sendMessage(msg: Message) {
+
     this.socket.emit('send_message', msg);
   }
 
@@ -66,6 +69,11 @@ export class ChatService {
       this.broadcast_user_infos();
     });
 
+  }
+
+  getUsers() {
+    this.socket.emit('getUsers');
+    return this.socket.fromEvent('sendUsers') as Observable<User[]>;
   }
 
   broadcast_user_infos() {

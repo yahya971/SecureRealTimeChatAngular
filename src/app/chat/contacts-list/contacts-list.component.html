@@ -6,6 +6,7 @@
       *ngFor="let user of users"
       [ngClass]="{ active: user.id === activeUser?.id }"
     >
+
       <div class="image-container">
         <img [src]="'../../assets/avatar.png'" height="37px" width="36px"/>
         <span
