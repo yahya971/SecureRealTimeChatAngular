@@ -2,20 +2,20 @@
   <div class="contacts-title">Contacts</div>
   <ul>
     <li
-      *ngFor="let contact of contactsService.contacts"
-      (click)="onUserSelected(contact)"
-      [ngClass]="{ active: contact.uid === activeUser?.uid }"
+      (click)="onUserSelected(user)"
+      *ngFor="let user of users"
+      [ngClass]="{ active: user.id === activeUser?.id }"
     >
       <div class="image-container">
-        <img [src]="contact.avatar" width="36px" height="37px" />
+        <img [src]="'../../assets/avatar.png'" height="37px" width="36px"/>
         <span
           class="circle"
-          [ngClass]="contact.status === 'online' ? 'on' : 'off'"
+          [ngClass]="user.status === 'online' ? 'on' : 'off'"
         ></span>
       </div>
       <div class="contacts-info">
-        <span class="status-title">{{ contact.name }}</span>
-        <span class="status-text">{{ contact.statusMessage }}</span>
+        <span class="status-title">{{user.id}}</span>
+        <span class="status-text">status</span>
       </div>
     </li>
   </ul>

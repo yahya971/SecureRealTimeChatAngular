@@ -1,16 +1,7 @@
-import {
-  Component,
-  Output,
-  EventEmitter,
-  Input,
-  ViewChild,
-  ElementRef,
-  OnChanges,
-  SimpleChanges
-} from '@angular/core';
-import { AuthService } from 'src/app/core/auth.service';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { CometChat } from '@cometchat-pro/chat';
 import { timer } from 'rxjs';
+import { AuthService } from '../../_services/auth.service';
 
 @Component({
   selector: 'app-messages-view',
