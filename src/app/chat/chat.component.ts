@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { AuthService } from '../core/auth.service';
+import { AuthService } from '../_services/auth.service';
 import { CometChat } from '@cometchat-pro/chat';
-import { ChatService } from './chat.service';
+import { ChatService } from '../_services/chat.service';
+import { User } from '../_models/User';
 
 const listenerId = 'ChatScreenListener';
 
@@ -12,7 +13,7 @@ const listenerId = 'ChatScreenListener';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  selectedUser: CometChat.UserObj;
+  selectedUser: User;
   messages: CometChat.TextMessage[] | null = null;
 
   constructor(
@@ -31,25 +32,25 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.chatService.removeMessageListener(listenerId);
   }
 
-  async onUserSelected(usr: CometChat.UserObj) {
-    this.selectedUser = usr;
-    const messages = await this.chatService.getPreviousMessages(usr.uid);
-    console.log('Previous messages', messages);
-
-    this.messages = (messages as any[]).filter(msg => msg.type === 'text');
-  }
-
-  async onSendMessage(message: string) {
-    console.log('sending message: ', message);
-    const sentMessage = await this.chatService.sendMessage(
-      this.selectedUser.uid,
-      message
-    );
-
-    console.log({ sentMessage });
-
-    if (sentMessage) {
-      this.messages = [...this.messages, sentMessage as any];
-    }
-  }
+  // async onUserSelected(usr: CometChat.UserObj) {
+  //   this.selectedUser = usr;
+  //   const messages = await this.chatService.getPreviousMessages(usr.uid);
+  //   console.log('Previous messages', messages);
+  //
+  //   this.messages = (messages as any[]).filter(msg => msg.type === 'text');
+  // }
+  //
+  // async onSendMessage(message: string) {
+  //   console.log('sending message: ', message);
+  //   const sentMessage = await this.chatService.sendMessage(
+  //     this.selectedUser.uid,
+  //     message
+  //   );
+  //
+  //   console.log({ sentMessage });
+  //
+  //   if (sentMessage) {
+  //     this.messages = [...this.messages, sentMessage as any];
+  //   }
+  // }
 }

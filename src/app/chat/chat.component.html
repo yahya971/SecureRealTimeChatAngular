@@ -1,24 +1,50 @@
 <div class="chat-toolbar">
   <div class="logo">
-    <img src="assets/chat-logo.svg" />
-    <span>Chat</span>
+    <img src="assets/chat-logo.svg"/>
+    <span>Secure Chat Project</span>
   </div>
   <div *ngIf="authService.currentUser" class="user-profile">
     <span>
-      Welcome, <b> {{ authService.currentUser.name }}</b>
+      Welcome, <b> {{ authService.currentUser.id }}</b>
     </span>
-    <img [src]="authService.currentUser.avatar" width="36px" height="37px" />
+    <img [src]="'../../assets/avatar.png'" height="37px" width="36px"/>
   </div>
 </div>
-<div class="chat-page">
-  <div class="chat-box">
-    <app-contacts-list
-      (userSelected)="onUserSelected($event)"
-    ></app-contacts-list>
-    <app-messages-view
-      [messages]="messages"
-      [selectedUserName]="selectedUser?.name"
-      (sendMessage)="onSendMessage($event)"
-    ></app-messages-view>
+
+<div class="row chat-page">
+  <div class="col-md-6">
+
+    <div class="chat-box">
+      <app-contacts-list
+      ></app-contacts-list>
+      <app-messages-view
+
+      ></app-messages-view>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <div class="chat-box">
+      i will print here my keys,
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="chat-box">
+      i will print here my certificate
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="chat-box">
+      i will print here crypted, decrypted messages
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="chat-box">
+      i will choose cipher, hashing algorithms
+    </div>
   </div>
 </div>

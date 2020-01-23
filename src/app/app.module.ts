@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +12,12 @@ import { SignupComponent } from './signup/signup.component';
 import { MaterialModule } from './material.module';
 import { ContactsListComponent } from './chat/contacts-list/contacts-list.component';
 import { MessagesViewComponent } from './chat/messages-view/messages-view.component';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { ClipboardModule } from 'ngx-clipboard';
+import { HttpClientModule } from '@angular/common/http';
+
+
+const config: SocketIoConfig = { url: 'http://127.0.0.1:5000/test', options: {} };
 
 @NgModule({
   declarations: [
@@ -28,8 +34,13 @@ import { MessagesViewComponent } from './chat/messages-view/messages-view.compon
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    SocketIoModule.forRoot(config),
+    ClipboardModule,
+    HttpClientModule
+
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}
