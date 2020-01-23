@@ -13,6 +13,7 @@ import { MaterialModule } from './material.module';
 import { ContactsListComponent } from './chat/contacts-list/contacts-list.component';
 import { MessagesViewComponent } from './chat/messages-view/messages-view.component';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { ClipboardModule } from 'ngx-clipboard';
 
 
 const config: SocketIoConfig = { url: 'http://127.0.0.1:5000/test', options: {} };
@@ -33,7 +34,8 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:5000/test', options: {} 
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    ClipboardModule
 
   ],
   bootstrap: [AppComponent]

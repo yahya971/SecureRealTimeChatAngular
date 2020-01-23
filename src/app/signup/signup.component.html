@@ -1,38 +1,112 @@
-<div class="login-page">
-  <div class="login-box">
-    <img src="assets/chat-illustration-2.svg" />
-    <div class="login-content">
-      <h1>Create an Account</h1>
-      <form [formGroup]="myForm" >
-        <mat-form-field>
-          <input matInput placeholder="User Name" type="text" formControlName="cn" required />
+<div class="login-page" style="overflow: scroll">
+  <div class="col-md-6">
+    <div class="login-box">
+      <img src="assets/chat-illustration-2.svg"/>
+      <div class="login-content">
+        <h1>Create an Account</h1>
+        <form [formGroup]="myForm">
+          <mat-form-field>
+            <input formControlName="cn" matInput placeholder="User Name" required type="text"/>
 
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="First Name" type="text" formControlName="givenName" required />
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="givenName" matInput placeholder="First Name" required type="text"/>
 
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Last Name" type="text" formControlName="sn" required />
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="sn" matInput placeholder="Last Name" required type="text"/>
 
-        </mat-form-field>
+          </mat-form-field>
 
-        <mat-form-field>
-          <input matInput placeholder="Telephone" type="text" formControlName="telephoneNumber" required/>
+          <mat-form-field>
+            <input formControlName="telephoneNumber" matInput placeholder="Telephone" required type="text"/>
 
-        </mat-form-field>
+          </mat-form-field>
 
-        <mat-form-field>
-          <input matInput placeholder="Password" type="password" formControlName="userPassword" required/>
+          <mat-form-field>
+            <input formControlName="userPassword" matInput placeholder="Password" required type="password"/>
 
-        </mat-form-field>
+          </mat-form-field>
 
-        <button mat-raised-button color="primary" (click)="submit()" [disabled]="myForm.invalid">SIGN UP</button>
-      </form>
-      <div>
-        <span>Do you have an account?</span>
-        <a routerLink="/login">Log in</a>
+          <button (click)="submit()" [disabled]="myForm.invalid" color="primary" mat-raised-button>SIGN UP</button>
+        </form>
+        <div>
+          <span>Do you have an account?</span>
+          <a routerLink="/login">Log in</a>
+        </div>
       </div>
     </div>
+  </div>
+  <div class="col-md-6">
+    <div class="div">
+      <div class="btn-group">
+
+        <button (click)="onGenerateKeyPairClick()" class="btn btn-danger"> Generate Key pair</button>
+        <button (cbOnSuccess)="onCopySuccess($event)" [cbContent]="cryptoService.PRIVATE_KEY_PEM"
+                class="btn btn-secondary"
+                ngxClipboard> Copy
+        </button>
+        <button (click)="onSave(cryptoService.PRIVATE_KEY_PEM,'private_key.pem')" class="btn btn-dark"> Download
+        </button>
+      </div>
+
+
+      <div class="card" style="max-height: 200px;">
+        <div class="card-header">
+          <h5>
+            Private key
+          </h5></div>
+        <div class="card-body" style="white-space: pre-wrap; overflow: scroll;">{{cryptoService.PRIVATE_KEY_PEM}}
+        </div>
+      </div>
+    </div>
+
+    <div class="div">
+      <div class="btn-group">
+
+        <button (cbOnSuccess)="onCopySuccess($event)" [cbContent]="cryptoService.PUBLIC_KEY_PEM"
+                class="btn btn-secondary"
+                ngxClipboard> Copy
+        </button>
+        <button (click)="onSave(cryptoService.PRIVATE_KEY_PEM,'public_key.pem')" class="btn btn-dark"> Download
+        </button>
+      </div>
+
+      <div class="card" style="max-height: 200px;">
+        <div class="card-header">
+          <h5>
+            Public key
+          </h5>
+
+        </div>
+        <div class="card-body" style="white-space: pre-wrap; overflow: scroll;">{{cryptoService.PUBLIC_KEY_PEM}}
+        </div>
+      </div>
+    </div>
+
+    <div class="div">
+      <div class="btn-group">
+        <button (click)="onGenerateCSR()" [disabled]="!cryptoService.PRIVATE_KEY_PEM" class="btn btn-danger"> Generate
+          CSR
+        </button>
+
+        <button (cbOnSuccess)="onCopySuccess($event)" [cbContent]="cryptoService.CSR_PEM" class="btn btn-secondary"
+                ngxClipboard> Copy
+        </button>
+        <button (click)="onSave(cryptoService.CSR_PEM,'csr.pem')" class="btn btn-dark"> Download
+        </button>
+      </div>
+      <div class="card" style="max-height: 200px;">
+        <div class="card-header">
+          <h5>
+            Certificate signging request (CSR)
+          </h5>
+        </div>
+        <div class="card-body" style="white-space: pre-wrap; overflow: scroll;">{{cryptoService.CSR_PEM}}
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </div>
