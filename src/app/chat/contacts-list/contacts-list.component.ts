@@ -16,6 +16,7 @@ const listenerId = 'ContactsListListner';
 export class ContactsListComponent implements OnInit, OnDestroy {
   @Output() userSelected = new EventEmitter<User>();
   @Input() users: User[];
+  @Input() messages: Message[];
   currentUser: User;
   activeUser: User;
 
@@ -57,6 +58,28 @@ export class ContactsListComponent implements OnInit, OnDestroy {
   onUserSelected(user: User) {
     this.activeUser = user;
     this.userSelected.emit(user);
+    for (let message of this.messages) {
+      if (message.destinationId === this.authService.currentUser.id && message.senderId == user.id && !message.seen) {
+        message.seen = true;
+      }
+    }
+  }
+
+
+  computeUnreadMessages(user: User) {
+
+      
+   let  sum = 0;
+    for (let message of this.messages) {
+      if (message.destinationId === this.authService.currentUser.id && message.senderId == user.id && !message.seen) {
+        if (this.activeUser && user.id == this.activeUser.id) {
+          message.seen = true;
+        }
+        else
+        sum++;
+      }
+    }
+    return sum;
   }
 
 }

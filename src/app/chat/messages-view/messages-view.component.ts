@@ -63,7 +63,7 @@ export class MessagesViewComponent implements OnChanges {
 
   //this functions checks if there are any messages between the selected User and the current User
   checkforMessages() {
- 
+    if(this.selectedUser)
     for (let value of this.messages) {
       if ((value.destinationId == this.selectedUser.id && value.senderId == this.authService.currentUser.id) || (value.destinationId == this.authService.currentUser.id && value.senderId == this.selectedUser.id))
         return true;

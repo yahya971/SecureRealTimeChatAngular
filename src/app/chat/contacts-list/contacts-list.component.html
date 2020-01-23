@@ -9,12 +9,11 @@
      
         <div class="image-container">
           <img [src]="'../../assets/avatar.png'" height="37px" width="36px" />
-          <span class="circle"
-                [ngClass]="user.status === 'online' ? 'on' : 'off'"></span>
+          <span class="circle on"></span>
         </div>
         <div class="contacts-info">
           <span class="status-title">{{user.id}}</span>
-          <span class="status-text">status</span>
+          <span class="status-text" *ngIf="computeUnreadMessages(user)!=0">You have <b style="color: red">{{ computeUnreadMessages(user) }} </b>unread messages</span>
         </div>
 
     </li>

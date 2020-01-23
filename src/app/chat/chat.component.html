@@ -15,7 +15,7 @@
   <div class="col-md-6">
 
     <div class="chat-box">
-      <app-contacts-list  (userSelected)="selectUser($event);" [users]="users"   >
+      <app-contacts-list  (userSelected)="selectUser($event);" [users]="users" [messages]="messages"  >
 
       </app-contacts-list>
       <app-messages-view
