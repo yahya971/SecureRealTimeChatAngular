@@ -45,7 +45,7 @@ export class ContactsListComponent implements OnInit, OnDestroy {
   getUsersWithoutCurrentUser() {
     let filteredUsers: User[] = [];
     this.users.map(value => {
-      if (value.id != this.currentUser.id)
+      if (value.id !== this.currentUser.id)
         filteredUsers.push(value);
     })
     return filteredUsers

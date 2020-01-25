@@ -3,7 +3,7 @@
   <ul>
     <li
       (click)="onUserSelected(user)"
-      *ngFor="let user of getUsersWithoutCurrentUser(users)"
+      *ngFor="let user of users"
       [ngClass]="{ active: user.id === activeUser?.id }"
     >
      

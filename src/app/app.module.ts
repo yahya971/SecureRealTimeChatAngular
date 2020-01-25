@@ -17,7 +17,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { HttpClientModule } from '@angular/common/http';
 
 
-const config: SocketIoConfig = { url: 'http://127.0.0.1:5000/test', options: {} };
+const config: SocketIoConfig = { url: 'http://127.0.0.1:5001/test', options: {} };
 
 @NgModule({
   declarations: [
