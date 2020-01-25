@@ -4,6 +4,7 @@ import { timer, from, Observable } from 'rxjs';
 import { AuthService } from '../../_services/auth.service';
 import { Message } from '../../_models/Message';
 import { User } from '../../_models/User';
+import { CryptoService } from '../../_services/crypto.service';
 
 @Component({
   selector: 'app-messages-view',
@@ -11,7 +12,7 @@ import { User } from '../../_models/User';
   styleUrls: ['./messages-view.component.scss']
 })
 export class MessagesViewComponent implements OnChanges {
-  @Input() selectedUser:User;
+  @Input() selectedUser: User;
   @Input() messages: Message[];
   @Output() sendMessage = new EventEmitter<Message>();
 
@@ -19,16 +20,22 @@ export class MessagesViewComponent implements OnChanges {
   @ViewChild('scrollMe', { static: false })
   messagesContainer: ElementRef<HTMLDivElement>;
 
-  constructor(readonly authService: AuthService) {
+  constructor(readonly authService: AuthService, private cryptoService: CryptoService) {
 
   }
+
   ngOnInit() {
-    this.filterMessages()
+    this.filterMessages();
   }
 
   onSendMessage(message: string) {
-    if (this.selectedUser)
-    this.sendMessage.emit(new Message(Math.floor(Math.random() * (999999 - 100000)) + 100000, message, this.authService.currentUser.id, this.selectedUser.id));   
+    if (!this.selectedUser) {
+      return;
+    }
+
+    const encrypted = this.cryptoService.encryptMessage(message);
+
+    this.sendMessage.emit(new Message(Math.floor(Math.random() * (999999 - 100000)) + 100000, encrypted, this.authService.currentUser.id, this.selectedUser.id));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -48,25 +55,26 @@ export class MessagesViewComponent implements OnChanges {
   //this function filters the messages to leave only the current user and the selected user messages visible
   filterMessages() {
     let filteredMessages: Message[] = [];
-    if(this.selectedUser)
+    if (this.selectedUser) {
       this.messages.map(value => {
         if ((value.destinationId == this.selectedUser.id && value.senderId == this.authService.currentUser.id) || (value.destinationId == this.authService.currentUser.id && value.senderId == this.selectedUser.id)) {
-        filteredMessages.push(value);
-      }
+          filteredMessages.push(value);
+        }
 
-    })
+      });
+    }
     return filteredMessages;
   }
 
 
-
-
   //this functions checks if there are any messages between the selected User and the current User
   checkforMessages() {
-    if(this.selectedUser)
-    for (let value of this.messages) {
-      if ((value.destinationId == this.selectedUser.id && value.senderId == this.authService.currentUser.id) || (value.destinationId == this.authService.currentUser.id && value.senderId == this.selectedUser.id))
-        return true;
+    if (this.selectedUser) {
+      for (let value of this.messages) {
+        if ((value.destinationId == this.selectedUser.id && value.senderId == this.authService.currentUser.id) || (value.destinationId == this.authService.currentUser.id && value.senderId == this.selectedUser.id)) {
+          return true;
+        }
+      }
     }
     return false;
   }

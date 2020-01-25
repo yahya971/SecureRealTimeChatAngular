@@ -15,9 +15,10 @@ import { MessagesViewComponent } from './chat/messages-view/messages-view.compon
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { ClipboardModule } from 'ngx-clipboard';
 import { HttpClientModule } from '@angular/common/http';
+import { DecryptPipe } from './_pipe/decrypt.pipe';
 
 
-const config: SocketIoConfig = { url: 'http://127.0.0.1:5000/test', options: {} };
+const config: SocketIoConfig = { url: 'http://127.0.0.1:5001/test', options: {} };
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:5000/test', options: {} 
     LoginComponent,
     SignupComponent,
     ContactsListComponent,
-    MessagesViewComponent
+    MessagesViewComponent,
+    DecryptPipe
   ],
   imports: [
     BrowserModule,

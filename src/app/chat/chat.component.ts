@@ -6,6 +6,7 @@ import { ChatService } from '../_services/chat.service';
 import { User } from '../_models/User';
 import { Message } from '../_models/Message';
 import { Observable, of } from 'rxjs';
+import { CryptoService } from '../_services/crypto.service';
 const listenerId = 'ChatScreenListener';
 
 @Component({
@@ -21,7 +22,9 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   constructor(
     readonly authService: AuthService,
-    readonly chatService: ChatService
+    readonly chatService: ChatService,
+    private cryptoService: CryptoService,
+
   ) {
 
     this.chatService.getConnectEvent().subscribe(
@@ -81,8 +84,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     console.log(user);
   }
 
+  onSendkey(key: string) {
+  console.log(key);
+  this.cryptoService.loadPrivateKey(key);
+  }
 
-
+  onSendPublickey(key: string) {
+    console.log(key);
+    this.cryptoService.loadPublicKey(key);
+  }
   //Output Handeling of MessageView
   recieveMessage(message) {
     console.log(message);
