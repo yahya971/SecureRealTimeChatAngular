@@ -1,11 +1,11 @@
 export class Message {
   id: number;
   content: string;
-  senderId: number;
-  destinationId: number;
+  senderId: string;
+  destinationId: string;
   seen:boolean
 
-  constructor(id:number, content:string, senderId:number, destinationId:number) {
+  constructor(id:number, content:string, senderId:string, destinationId:string) {
     this.id = id;
     this.content = content;
     this.senderId = senderId;

@@ -29,15 +29,24 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     this.chatService.getConnectEvent().subscribe(
       (data: User[]) => {
-        this.users = data;
+        this.users = this.getUsersWithoutCurrentUser(data);
         console.log('CONNECTED EVENT');
         console.log(this.users);
 
       });
   }
 
+  getUsersWithoutCurrentUser(data) {
+    let filteredUsers: User[] = [];
+    data.map(value => {
+      if (value.id !== this.authService.currentUser.id)
+        filteredUsers.push(value);
+    })
+    return filteredUsers
+  }
+
   ngOnInit() {
-    this.chatService.broadcast_connect();
+
     this.chatService.getMessage().subscribe((value: Message) => {
       console.log(value);
       this.messages.push(value);

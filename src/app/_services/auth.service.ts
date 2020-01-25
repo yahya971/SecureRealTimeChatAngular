@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
-  currentUser = new User();
+  currentUser: User;
 
   constructor(private snackBar: MatSnackBar, private httpClient: HttpClient) {
     //this.init(environment.appId);

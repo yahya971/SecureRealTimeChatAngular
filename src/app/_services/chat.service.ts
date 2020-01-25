@@ -31,8 +31,6 @@ export class ChatService {
 
   broadcast_connect() {
     return this.socket.on('connect', () => {
-      console.log('i will give my id');
-      this.broadcast_user_infos();
     });
 
   }
