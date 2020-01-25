@@ -12,7 +12,7 @@
           <span class="circle on"></span>
         </div>
         <div class="contacts-info">
-          <span class="status-title">{{user.id}}</span>
+          <span class="status-title">{{user.name}} {{user.lastName}}</span>
           <span class="status-text" *ngIf="computeUnreadMessages(user)!=0">You have <b style="color: red">{{ computeUnreadMessages(user) }} </b>unread messages</span>
         </div>
 

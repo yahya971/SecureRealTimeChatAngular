@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as forge from 'node-forge';
 import { pki } from 'node-forge';
+import { User } from '../_models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -136,11 +137,12 @@ export class CryptoService {
     console.log(this._PUBLIC_KEY);
   }
 
-  encryptMessage(message: string)
+  encryptMessage(message: string,selectedUser:User)
 
     : string {
+    let selectedUserPublickey:any = pki.publicKeyFromPem(selectedUser.pubkey);
     let encrypted: string;
-    encrypted = this._PUBLIC_KEY.encrypt(message);
+    encrypted = selectedUserPublickey.encrypt(message);
     console.log(encrypted);
     return encrypted;
   }

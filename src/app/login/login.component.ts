@@ -18,6 +18,7 @@ export class LoginComponent {
     this.authService.login(formulaire.value).subscribe((data:any) => {
       console.log(data);
       this.authService.currentUser = new User(data.uid, data.givenName, data.sn, '00000000', data.certificate, data.pubkey, 'online');
+      console.log(this.authService.currentUser);
       this.chatService.broadcast_user_infos();
       this.router.navigateByUrl('/chat');
 

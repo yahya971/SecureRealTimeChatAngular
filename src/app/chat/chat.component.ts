@@ -80,9 +80,29 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.cryptoService.loadPublicKey(key);
   }
   //Output Handeling of MessageView
-  recieveMessage(message) {
-    console.log(message);
-    this.chatService.sendMessage(message);
+  recieveMessage(message:Message) {
+    if (message.encrypted == true)
+      this.chatService.sendMessage(message);
+    else {
+      this.messages.push(message);
+    }
+    console.log(this.messages)
+  }
+
+
+
+  //this filters the messages to leave those encrypted for the log
+  filterMessagesEncrypted() {
+    let filteredMessages: Message[] = [];
+    if (this.selectedUser) {
+      this.messages.map(value => {
+        if ((value.destinationId == this.selectedUser.id && value.senderId == this.authService.currentUser.id && value.encrypted == true) || (value.destinationId == this.authService.currentUser.id && value.senderId == this.selectedUser.id && value.encrypted == true)) {
+          filteredMessages.push(value);
+        }
+
+      });
+    }
+    return filteredMessages;
   }
 
 

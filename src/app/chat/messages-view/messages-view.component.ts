@@ -20,6 +20,8 @@ export class MessagesViewComponent implements OnChanges {
   @ViewChild('scrollMe', { static: false })
   messagesContainer: ElementRef<HTMLDivElement>;
 
+
+
   constructor(readonly authService: AuthService, private cryptoService: CryptoService) {
 
   }
@@ -33,9 +35,11 @@ export class MessagesViewComponent implements OnChanges {
       return;
     }
 
-    const encrypted = this.cryptoService.encryptMessage(message);
+    const encrypted = this.cryptoService.encryptMessage(message,this.selectedUser);
 
-    this.sendMessage.emit(new Message(Math.floor(Math.random() * (999999 - 100000)) + 100000, encrypted, this.authService.currentUser.id, this.selectedUser.id));
+    this.sendMessage.emit(new Message(Math.floor(Math.random() * (999999 - 100000)) + 100000, encrypted, this.authService.currentUser.id, this.selectedUser.id, true, this.authService.currentUser.name, this.selectedUser.name));
+    this.sendMessage.emit(new Message(Math.floor(Math.random() * (999999 - 100000)) + 100000, message, this.authService.currentUser.id, this.selectedUser.id, false, this.authService.currentUser.name, this.selectedUser.name));
+    console.log(message);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -53,11 +57,12 @@ export class MessagesViewComponent implements OnChanges {
 
 
   //this function filters the messages to leave only the current user and the selected user messages visible
+  //this also leaves only the sent messages that are not encrypted to be visible for the sender
   filterMessages() {
     let filteredMessages: Message[] = [];
     if (this.selectedUser) {
       this.messages.map(value => {
-        if ((value.destinationId == this.selectedUser.id && value.senderId == this.authService.currentUser.id) || (value.destinationId == this.authService.currentUser.id && value.senderId == this.selectedUser.id)) {
+        if ((value.destinationId == this.selectedUser.id && value.senderId == this.authService.currentUser.id && value.encrypted == false) || (value.destinationId == this.authService.currentUser.id && value.senderId == this.selectedUser.id && value.encrypted==true)) {
           filteredMessages.push(value);
         }
 
@@ -65,6 +70,11 @@ export class MessagesViewComponent implements OnChanges {
     }
     return filteredMessages;
   }
+
+
+
+
+
 
 
   //this functions checks if there are any messages between the selected User and the current User

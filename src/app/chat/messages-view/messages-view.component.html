@@ -25,7 +25,7 @@
             message.senderId === authService.currentUser.id
               ? 'speech-bubble-own'
               : 'speech-bubble'
-          ">{{ message.content | decrypt}}</span>
+          ">{{ message | decrypt}}</span>
       </li>
     </ul>
   </div>
