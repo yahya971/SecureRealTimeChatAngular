@@ -6,10 +6,22 @@ import { pki } from 'node-forge';
   providedIn: 'root'
 })
 export class CryptoService {
+  private _PRIVATE_KEY: any;
+
   constructor() {
   }
 
   private _PUBLIC_KEY_PEM: string;
+  private _PUBLIC_KEY: any;
+
+
+  get PUBLIC_KEY(): any {
+    return this._PUBLIC_KEY;
+  }
+
+  set PUBLIC_KEY(value: any) {
+    this._PUBLIC_KEY = value;
+  }
 
   get PUBLIC_KEY_PEM(): string {
     return this._PUBLIC_KEY_PEM;
@@ -113,4 +125,29 @@ export class CryptoService {
     this._CSR_PEM = null;
   }
 
+  loadPrivateKey(key: string) {
+    this._PRIVATE_KEY = pki.privateKeyFromPem(key);
+    console.log(this._PRIVATE_KEY);
+
+  }
+
+  loadPublicKey(key: string) {
+    this._PUBLIC_KEY = pki.publicKeyFromPem(key);
+    console.log(this._PUBLIC_KEY);
+  }
+
+  encryptMessage(message: string)
+
+    : string {
+    let encrypted: string;
+    encrypted = this._PUBLIC_KEY.encrypt(message);
+    console.log(encrypted);
+    return encrypted;
+  }
+
+  decryptMessage(encrypted: string): any {
+    let decrypted = this._PRIVATE_KEY.decrypt(encrypted);
+    console.log(decrypted);
+    return decrypted;
+  }
 }

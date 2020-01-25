@@ -19,32 +19,52 @@
 
       </app-contacts-list>
       <app-messages-view
-        [messages]="messages"                 
+        [messages]="messages"
         [selectedUser]="selectedUser"
         (sendMessage)="recieveMessage($event)"
       ></app-messages-view>
     </div>
   </div>
 
-
   <div class="col-md-6">
     <div class="chat-box">
-      i will print here my keys,
+  <div class="card" style="width:100%">
+    <div class="card-header">
+      <h5>
+        Private key
+      </h5></div>
+    <div class="card-body" style="white-space: pre-wrap; overflow: scroll;">
+      <textArea placeholder="enter your private key"
+      style="width: 100%; height: 350px"
+      #privatekey>
+</textArea>
+      <button (click)="onSendkey(privatekey.value)" class="btn btn-primary">load key</button>
+    </div>
+  </div>
+
+
     </div>
   </div>
 
   <div class="col-md-6">
     <div class="chat-box">
-      i will print here my certificate
+      <div class="card" style="width:100%">
+        <div class="card-header">
+          <h5>
+            Private key
+          </h5></div>
+        <div class="card-body" style="white-space: pre-wrap; overflow: scroll;">
+      <textArea placeholder="enter your private key"
+                style="width: 100%; height: 350px"
+                #publickey>
+</textArea>
+          <button (click)="onSendPublickey(publickey.value)" class="btn btn-primary">load key</button>
+        </div>
+      </div>
+
+
     </div>
   </div>
-
-  <div class="col-md-6">
-    <div class="chat-box">
-      i will print here crypted, decrypted messages
-    </div>
-  </div>
-
   <div class="col-md-6">
     <div class="chat-box">
       i will choose cipher, hashing algorithms

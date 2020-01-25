@@ -19,8 +19,8 @@ export class LoginComponent {
       console.log(data);
       this.authService.currentUser = new User(data.uid, data.givenName, data.sn, '00000000', data.certificate, data.pubkey, 'online');
       this.chatService.broadcast_user_infos();
+      this.router.navigateByUrl('/chat');
 
     })
-    this.router.navigateByUrl('/chat');
   }
 }
