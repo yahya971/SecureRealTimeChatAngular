@@ -57,13 +57,16 @@
 
   <div class="col-md-6">
     <div class="chat-box">
-      <!-- THe problem is here bouhmiiiiiid-->
-      <div *ngFor="let message of filterMessagesEncrypted()" style="display:inline-block">
-        <b style="color:green">FROM: {{message.senderName}}</b> <b style="color:red"> To : {{message.recieverName}}</b>
-          <div> <b style="color: darkblue">Content: </b>
-          {{message.content}}
+      <div class="container" style="white-space: pre-wrap; overflow: scroll;">
+        <div class="row" *ngFor="let message of filterMessagesEncrypted()" style="display:inline-block">
+          <div class="col-lg-9">
+            <b style="color:green">FROM: {{message.senderName}}</b> <b style="color:red"> To : {{message.recieverName}}</b>
+            <div> <b style="color: darkblue">Content: </b>
+              {{message.content}}
+            </div>
           </div>
         </div>
+      </div>
       </div>
   </div>
 </div>
