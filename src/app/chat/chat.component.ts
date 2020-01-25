@@ -58,30 +58,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    //this.chatService.removeMessageListener(listenerId);
   }
-
-  // async onUserSelected(usr: CometChat.UserObj) {
-  //   this.selectedUser = usr;
-  //   const messages = await this.chatService.getPreviousMessages(usr.uid);
-  //   console.log('Previous messages', messages);
-  //
-  //   this.messages = (messages as any[]).filter(msg => msg.type === 'text');
-  // }
-  //
-  // async onSendMessage(message: string) {
-  //   console.log('sending message: ', message);
-  //   const sentMessage = await this.chatService.sendMessage(
-  //     this.selectedUser.uid,
-  //     message
-  //   );
-  //
-  //   console.log({ sentMessage });
-  //
-  //   if (sentMessage) {
-  //     this.messages = [...this.messages, sentMessage as any];
-  //   }
-  // }
 
 
   //Output Handeling of Contacts List
