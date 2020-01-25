@@ -134,10 +134,11 @@ export class CryptoService {
   loadPublicKey(key: string) {
     this._PUBLIC_KEY = pki.publicKeyFromPem(key);
     console.log(this._PUBLIC_KEY);
-    this.encryptMessage('3asba');
   }
 
-  encryptMessage(message: string): string {
+  encryptMessage(message: string)
+
+    : string {
     let encrypted: string;
     encrypted = this._PUBLIC_KEY.encrypt(message);
     console.log(encrypted);
