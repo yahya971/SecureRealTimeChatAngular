@@ -24,11 +24,14 @@
           </mat-form-field>
 
           <mat-form-field>
-            <input formControlName="userPassword" matInput placeholder="Password" required type="password"/>
+            <input formControlName="userPassword" matInput minlength="5" placeholder="Password" required
+                   type="password"/>
 
           </mat-form-field>
 
-          <button (click)="submit()" [disabled]="myForm.invalid" color="primary" mat-raised-button>SIGN UP</button>
+          <button (click)="submit()" [disabled]="myForm.invalid || !cryptoService.CSR_PEM" color="primary"
+                  mat-raised-button>SIGN UP
+          </button>
         </form>
         <div>
           <span>Do you have an account?</span>

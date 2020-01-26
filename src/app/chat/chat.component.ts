@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { AuthService } from '../_services/auth.service';
-import { CometChat } from '@cometchat-pro/chat';
 import { ChatService } from '../_services/chat.service';
 import { User } from '../_models/User';
 import { Message } from '../_models/Message';
-import { Observable, of } from 'rxjs';
 import { CryptoService } from '../_services/crypto.service';
+import { NotyService } from '../_services/noty.service';
 
 const listenerId = 'ChatScreenListener';
 
@@ -24,7 +23,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor(
     readonly authService: AuthService,
     readonly chatService: ChatService,
-    private cryptoService: CryptoService
+    private cryptoService: CryptoService,
+    private notyService: NotyService
   ) {
 
     this.chatService.getConnectEvent().subscribe(
@@ -53,7 +53,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.messages.push(value);
     });
 
-    alert('please enter your private key!');
+    this.notyService.showInfoAlert('Please enter your private key ');
     //this.chatService.getMessage().subscribe( (msg:Message) => {
     //  console.log('New message: ', msg);
     //  this.messages.push(msg);
@@ -105,6 +105,10 @@ export class ChatComponent implements OnInit, OnDestroy {
       });
     }
     return filteredMessages;
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 

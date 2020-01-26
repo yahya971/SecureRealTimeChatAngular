@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CometChat } from '@cometchat-pro/chat';
 import { MatSnackBar } from '@angular/material';
-
-import { environment } from '../../environments/environment';
 import { User } from '../_models/User';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
   currentUser: User;
 
-  constructor(private snackBar: MatSnackBar, private httpClient: HttpClient) {
+  constructor(private snackBar: MatSnackBar, private httpClient: HttpClient, private router: Router) {
     //this.init(environment.appId);
   }
 
@@ -34,5 +32,10 @@ export class AuthService {
 
   signup(data) {
     return this.httpClient.post('http://127.0.0.1:5000/signup', data);
+  }
+
+  logout() {
+    this.currentUser = null;
+    this.router.navigateByUrl('/login');
   }
 }

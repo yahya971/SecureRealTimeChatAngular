@@ -5,6 +5,7 @@ import { CryptoService } from '../_services/crypto.service';
 import { IClipboardResponse } from 'ngx-clipboard';
 import * as FileSaver from 'file-saver';
 import { AuthService } from '../_services/auth.service';
+import { NotyService } from '../_services/noty.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,8 @@ export class SignupComponent implements OnInit {
 
   myForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private cryptoService: CryptoService, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private notyService: NotyService,
+              private router: Router, private cryptoService: CryptoService, private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -40,8 +42,12 @@ export class SignupComponent implements OnInit {
       data => {
         console.log(data);
         this.router.navigateByUrl('/login');
+        this.notyService.showSucessAlert('Your account has been created successfully');
+      }, (error) => {
+        this.notyService.showErrorAlert(error as string);
       }
-    );
+    )
+    ;
   }
 
   onGenerateKeyPairClick() {

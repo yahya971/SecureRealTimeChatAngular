@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as forge from 'node-forge';
 import { pki } from 'node-forge';
 import { User } from '../_models/User';
+import { NotyService } from './noty.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { User } from '../_models/User';
 export class CryptoService {
   private _PRIVATE_KEY: any;
 
-  constructor() {
+  constructor(private notyService: NotyService) {
   }
 
   private _PUBLIC_KEY_PEM: string;
@@ -128,6 +129,11 @@ export class CryptoService {
 
   loadPrivateKey(key: string) {
     this._PRIVATE_KEY = pki.privateKeyFromPem(key);
+    if (this._PRIVATE_KEY) {
+      this.notyService.showSucessAlert('Loaded private key');
+    } else {
+      this.notyService.showErrorAlert('Private key is invalid');
+    }
     console.log(this._PRIVATE_KEY);
 
 
