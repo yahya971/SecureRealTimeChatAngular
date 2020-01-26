@@ -39,6 +39,7 @@ export class SignupComponent implements OnInit {
     this.authService.signup(this.myForm.value).subscribe(
       data => {
         console.log(data);
+        this.router.navigateByUrl('/login');
       }
     );
   }
