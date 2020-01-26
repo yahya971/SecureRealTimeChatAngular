@@ -6,6 +6,7 @@ import { User } from '../../_models/User';
 import { Message } from '../../_models/Message';
 import { AuthService } from '../../_services/auth.service';
 import { Observable } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 const listenerId = 'ContactsListListner';
 
 @Component({
@@ -22,7 +23,7 @@ export class ContactsListComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(readonly contactsService: ContactsService, private chatService: ChatService, private authService: AuthService) {
+  constructor(readonly contactsService: ContactsService, private chatService: ChatService, private authService: AuthService, private titleService: Title) {
   }
 
   ngOnInit() {
@@ -64,8 +65,16 @@ export class ContactsListComponent implements OnInit, OnDestroy {
       }
     }
   }
+    changeTitle(): string {
+    let count = this.computeUnreadMessages(this.authService.currentUser)
+    var newTitle = '(' + count + ') ' + this.titleService.getTitle();
+    return newTitle;
+  }
 
-
+  public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
+  }
+  
   computeUnreadMessages(user: User) {
 
 
