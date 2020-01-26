@@ -29,11 +29,11 @@ export class ContactsListComponent implements OnInit, OnDestroy {
 
     this.currentUser = this.authService.currentUser;
 
-  
+
     // var message = new Message(1, "Hello World", 2, 3);
 
     //this.chatService.sendMessage(message);
-    
+
 
     //this.selectFirstContact();
   }
@@ -48,7 +48,7 @@ export class ContactsListComponent implements OnInit, OnDestroy {
       if (value.id !== this.currentUser.id)
         filteredUsers.push(value);
     })
-    return filteredUsers
+    return filteredUsers;
   }
 
   ngOnDestroy(): void {
@@ -68,7 +68,7 @@ export class ContactsListComponent implements OnInit, OnDestroy {
 
   computeUnreadMessages(user: User) {
 
-      
+
    let  sum = 0;
     for (let message of this.messages) {
       if (message.destinationId === this.authService.currentUser.id && message.senderId == user.id && !message.seen) {

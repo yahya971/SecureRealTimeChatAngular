@@ -7,6 +7,7 @@ import { User } from '../_models/User';
 import { Message } from '../_models/Message';
 import { Observable, of } from 'rxjs';
 import { CryptoService } from '../_services/crypto.service';
+
 const listenerId = 'ChatScreenListener';
 
 @Component({
@@ -18,13 +19,12 @@ export class ChatComponent implements OnInit, OnDestroy {
   selectedUser: User;
   messages: Message[] = [];
 
-  users: User[]=[];
+  users: User[] = [];
 
   constructor(
     readonly authService: AuthService,
     readonly chatService: ChatService,
-    private cryptoService: CryptoService,
-
+    private cryptoService: CryptoService
   ) {
 
     this.chatService.getConnectEvent().subscribe(
@@ -39,10 +39,11 @@ export class ChatComponent implements OnInit, OnDestroy {
   getUsersWithoutCurrentUser(data) {
     let filteredUsers: User[] = [];
     data.map(value => {
-      if (value.id !== this.authService.currentUser.id)
+      if (value.id !== this.authService.currentUser.id) {
         filteredUsers.push(value);
-    })
-    return filteredUsers
+      }
+    });
+    return filteredUsers;
   }
 
   ngOnInit() {
@@ -50,8 +51,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.chatService.getMessage().subscribe((value: Message) => {
       console.log(value);
       this.messages.push(value);
-    })
+    });
 
+    alert('please enter your private key!');
     //this.chatService.getMessage().subscribe( (msg:Message) => {
     //  console.log('New message: ', msg);
     //  this.messages.push(msg);
@@ -71,24 +73,24 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   onSendkey(key: string) {
-  console.log(key);
-  this.cryptoService.loadPrivateKey(key);
+    console.log(key);
+    this.cryptoService.loadPrivateKey(key);
   }
 
   onSendPublickey(key: string) {
     console.log(key);
     this.cryptoService.loadPublicKey(key);
   }
+
   //Output Handeling of MessageView
-  recieveMessage(message:Message) {
-    if (message.encrypted == true)
+  recieveMessage(message: Message) {
+    if (message.encrypted == true) {
       this.chatService.sendMessage(message);
-    else {
+    } else {
       this.messages.push(message);
     }
-    console.log(this.messages)
+    console.log(this.messages);
   }
-
 
 
   //this filters the messages to leave those encrypted for the log
