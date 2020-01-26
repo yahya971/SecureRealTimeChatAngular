@@ -12,16 +12,17 @@ import { ChatService } from '../_services/chat.service';
 })
 export class LoginComponent {
 
-  constructor(readonly router: Router, private authService: AuthService, private chatService: ChatService) { }
+  constructor(readonly router: Router, private authService: AuthService, private chatService: ChatService) {
+  }
 
   login(formulaire: NgForm) {
-    this.authService.login(formulaire.value).subscribe((data:any) => {
+    this.authService.login(formulaire.value).subscribe((data: any) => {
       console.log(data);
       this.authService.currentUser = new User(data.uid, data.givenName, data.sn, '00000000', data.certificate, data.pubkey, 'online');
       console.log(this.authService.currentUser);
       this.chatService.broadcast_user_infos();
       this.router.navigateByUrl('/chat');
 
-    })
+    });
   }
 }

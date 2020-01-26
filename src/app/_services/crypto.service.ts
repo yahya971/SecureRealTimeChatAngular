@@ -105,7 +105,7 @@ export class CryptoService {
 
     // verify certification request
     // @ts-ignore
-    var verified = csr.verify();
+    const verified = csr.verify();
     console.log('verify');
     console.log(verified);
     console.log('subject in csr');
@@ -130,6 +130,7 @@ export class CryptoService {
     this._PRIVATE_KEY = pki.privateKeyFromPem(key);
     console.log(this._PRIVATE_KEY);
 
+
   }
 
   loadPublicKey(key: string) {
@@ -137,10 +138,10 @@ export class CryptoService {
     console.log(this._PUBLIC_KEY);
   }
 
-  encryptMessage(message: string,selectedUser:User)
+  encryptMessage(message: string, selectedUser: User)
 
     : string {
-    let selectedUserPublickey:any = pki.publicKeyFromPem(selectedUser.pubkey);
+    let selectedUserPublickey: any = pki.publicKeyFromPem(selectedUser.pubkey);
     let encrypted: string;
     encrypted = selectedUserPublickey.encrypt(message);
     console.log(encrypted);
@@ -148,7 +149,7 @@ export class CryptoService {
   }
 
   decryptMessage(encrypted: string): any {
-    let decrypted = this._PRIVATE_KEY.decrypt(encrypted);
+    const decrypted = this._PRIVATE_KEY.decrypt(encrypted);
     console.log(decrypted);
     return decrypted;
   }
