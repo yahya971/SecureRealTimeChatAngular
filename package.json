@@ -26,7 +26,7 @@
     "@types/node-forge": "^0.9.1",
     "bootstrap": "^4.4.1",
     "file-saver": "^2.0.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ngx-clipboard": "^12.3.0",
     "ngx-socket-io": "^3.0.1",
     "node-forge": "^0.9.1",
